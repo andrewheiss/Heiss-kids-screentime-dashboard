@@ -1,0 +1,126 @@
+html, button, input, select, textarea,
+.pure-g [class *= "pure-u"] {
+    /* Set your content font stack here: */
+    font-family: "Oxygen", sans-serif;
+    font-weight: 300;
+}
+
+body {
+    color: #526066;
+}
+
+h2, h3 {
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+p {
+    line-height: 1.6em;
+}
+
+.content {
+    max-width: 980px;
+    margin: 3.125em auto;
+}
+
+.points {
+    text-align: center;
+}
+
+.kid-wrapper {
+	
+}
+
+.kid-info {
+	padding: 2em 0;
+    color: #ffffff;
+}
+
+.kid-info h2 {
+    margin: 0;
+    font-size: 1em;
+    font-weight: normal;
+}
+
+.kid-points {
+    font-size: 6em;
+    margin: 0.2em 0 0;
+    font-weight: 700;
+}
+
+.kid-wrapper table {
+	margin: 0 auto;
+	text-align: left;
+	font-size: 0.8em;
+}
+
+.kid-wrapper table td:nth-child(3),
+.kid-wrapper table th:nth-child(3) {
+	text-align: right;
+}
+
+.rachel {
+    background: #208A70;
+}
+
+.miriam {
+    background: #FE4365;
+}
+
+.benjamin {
+    background: #2ECC40;
+}
+
+#rachel-history, 
+#miriam-history, 
+#benjamin-history {
+	display: none;
+}
+
+.show-history {
+	background: #f2f2f2;
+	height: 1em;
+	cursor: pointer;
+}
+
+.show-history:hover {
+	background: #e0e0e0;
+}
+
+.activities {
+    margin-top: 5em;
+}
+
+.activities-wrapper {
+	margin: 1.5em 0 0;
+}
+
+.activities-table table {
+    margin: 0 auto;
+}
+
+.activities-table table td:nth-child(2),
+.activities-table table th:nth-child(2) {
+	text-align: right;
+}
+
+.section-header h2 {
+    font-weight: 300;
+    text-align: center;
+}
+
+.button-wrapper {
+	text-align: center;
+}
+
+.button-form {
+	background: #FF851B;
+	color: #ffffff;
+	font-weight: 400;
+}
+
+.colophon {
+	margin: 6.5em 0 0;
+	text-align: center;
+}
