@@ -29,32 +29,27 @@
     <script type="text/javascript">
         // TODO: Someday use JSON instead of CSV, like http://kovalent.co/blog/google-docs-as-a-backend/
         var point_data = null;
+        var activity_data = null;
 
         var nice_day_format = d3.time.format("%B %e ");
         var nice_time_format = d3.time.format("%_I:%M %p");
 
         // Load point data
-        d3.csv("https://docs.google.com/spreadsheets/d/1eKPQJcjm384jryMAw0jZCAvfhxyPM5aHvG3PQanq3sw/export?format=csv")
-            .row(function(d) {
-                // Clean timestamp
-                timestamp = d3.time.format("%m/%d/%Y %H:%M:%S").parse(d["Timestamp"]);
-
-                // Clean amount (make negative if marked as spent)
-                earn_spend = d["Did you earn points or spend points?"];
-                amount = +d["How many points did you earn or use?"];
+        d3.json("https://spreadsheets.google.com/feeds/list/1eKPQJcjm384jryMAw0jZCAvfhxyPM5aHvG3PQanq3sw/1/public/full?alt=json", function(data) {
+            data['feed']['entry'].forEach(function(d) {
+                earn_spend = d["gsx$didyouearnpointsorspendpoints"]["$t"]
+                amount = +d["gsx$howmanypointsdidyouearnoruse"]["$t"]
                 if (earn_spend == "Spend points") { amount = -amount };
 
-                // Return cleaned data
-                return {
-                    timestamp: timestamp,
-                    kid: d["Who are you?"],
-                    amount: amount
-                }; })
-            .get(function(error, rows) {
-                point_data = rows;  // Assign data now that it's been collected
-                point_data.sort(function(a,b) { return b.timestamp - a.timestamp; });
-                update_points()  // Use the data in a function
-            });
+                d.timestamp = d3.time.format("%m/%d/%Y %H:%M:%S").parse(d["gsx$timestamp"]["$t"]);
+                d.kid = d["gsx$whoareyou"]["$t"];
+                d.amount = amount;
+            })
+
+            point_data = data['feed']['entry'];  // Assign data now that it's been collected
+            point_data.sort(function(a,b) { return b.timestamp - a.timestamp; });
+            update_points()  // Use the data in a function
+        });
 
         // Display point data on the page
         function update_points() {
@@ -107,17 +102,16 @@
         }
 
         // Load activity data
-        d3.csv("https://docs.google.com/spreadsheets/d/1r-8prhiEwqC-INuRSBlW6WqPREkc-KudZUkRGDwSZsc/export?format=csv")
-            .row(function(d) {
-                return {
-                    activity: d["Activity"],
-                    points: +d["Points"]
-                }; })
-            .get(function(error, rows) {
-                activity_data = rows;  // Assign data now that it's been collected
-                activity_data.sort(function(a,b) { return b.points - a.points; });
-                update_activities()  // Use the data in a function
-            });
+        d3.json("https://spreadsheets.google.com/feeds/list/1r-8prhiEwqC-INuRSBlW6WqPREkc-KudZUkRGDwSZsc/1/public/full?alt=json", function(data) {
+            data['feed']['entry'].forEach(function(d) {
+                d.activity = d["gsx$activity"]["$t"];
+                d.points = d["gsx$points"]["$t"];
+            })
+
+            activity_data = data['feed']['entry'];  // Assign data now that it's been collected
+            activity_data.sort(function(a,b) { return b.points - a.points; });
+            update_activities()  // Use the data in a function
+        });
 
         // Display activities on the page
         function update_activities() {
